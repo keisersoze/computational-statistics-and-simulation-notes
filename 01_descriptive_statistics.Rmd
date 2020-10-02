@@ -1,0 +1,117 @@
+---
+title: "Computational Statistics and Simulation"
+author: "Gregory Sech"
+date: "25/09/2020"
+output: pdf_document
+---
+
+# Course Introduction
+
+These are notes on the [Computational Statistics and Simulation course](https://www.unive.it/data/insegnamento/332764) at Ca' Foscari's Master Degree Programme of Computer Sicence.  
+This course is taught by [Professor Mario Marozzi](https://www.unive.it/data/persone/12251895) and does not have a Textbook as it is mostly a practical course.  
+There might be some mistakes or straight up conceptual errors, for that I am sorry.  
+Anyone is welcome to post an issue or open a pull request to ask for a fix. I will try to be as swift as possible in getting it fixed.
+
+# On HOW to choose a statistic.
+
+Statistics are about various things however we can define **Descriptive Statistics** as a way of extracting knowledge from a data set.  
+It's quite important to understand what is the concept that a statistic is trying to extract from the data so that we can choose the right one.  
+However this last phrase works in two points of view:
+
+* A general point of view about *what are we looking for in the data*.
+* A more thoughtful point of view that take into consideration the *nuances associated with our data* when looking for specific knowledge.
+
+These points of view will be more clear later on when we will see that sometimes there is more than one statistic that can be used in pursuit of similar concepts.
+
+## Arithmetic Mean
+The **arithmetic mean**, or simply *mean* or *average* is one of the most commonly used statistics.  
+It's a *measure of central tendency* for a probability distribution.  
+
+### Central Tendency
+But wait, what does this even mean?  
+This is a fancy way of saying that we are looking for a somewhat "central point" where the rest of the data gathers around.  
+Sometimes this is referred to as the **location** of the distribution or as the **typical value** of the distribution.
+
+### How it's calculated
+The arithmetic mean is nothing more than the sum of a collection of numbers divided by the count of elements in said collection.
+
+Given a collection of numbers $X = \{x_1, ..., x_n\}$, the **arithmetic mean** $\bar{x}$ is calculated as
+$$
+\bar{x} = \frac{\sum_{i=1}^n x_i}{n}
+$$
+
+### Is it a silver bullet?
+
+No, the arithmetic mean is not a silver bullet. No statistic is.  
+Think about what happen is we get an anomalous reading in our collection of data. 
+If a really really big (or really really negative) number compared to the rest is part of our data set we might get a distorted vision of the *location* of most of our data points.  
+This means that the arithmetic mean is somewhat sensible about what could be obvious noise to anyone who has knowledge about the nature of the data that is being analyzed.  
+Anyhow, that is not the only limitation that can come to mind.  
+
+We can think even more broader and ask ourselves: what happens if our data doesn't represent a numerical value but a category? How can we handle that with the arithmetic mean and still get an idea of the *typical value* of our distribution?  
+
+To handle those cases we must choose a **different statistic**.
+
+## Median
+Let's ignore for a moment the categorical problem and let's concentrate first on the problem of robustness to noise.  
+The **median** is another measure of central tendency that is somewhat more resilient to noise than the arithmetic mean.  
+
+Why is the mean more robust? We must first see how it is calculated.
+
+### How it's calculated
+By definition the mean is the *middle value* that separated the higher half from the lower half of the data set.  
+This means that it can be used not only with numerical values but with any *ordinal data* (it means that it can be ordered/sorted).  
+
+Given an *ordered* collection of data points $X = \{x_1, ..., x_n\}$ such as $x_1 \leq x_2 \leq ... \leq x_n$ the median is defined as:
+$$
+median(X) = \frac{1}{2} \left( x_{ \left \lfloor\frac{(n+1)}{2} \right\rfloor } + x_{ \left \lceil\frac{(n+1)}{2} \right\rceil }  \right) 
+$$
+
+Notice that with the floor and ceiling functions we are able to calculate the mean of the 2 central values for the edge case when $n$ is an even number.
+
+This is more robust because it is less influenced by the magnitude of the values at the "tails" of our distribution as a single noisy data point is at most shifting our selection by a single position.
+
+### So, is the arithmetic mean garbage?
+No, it's not.  
+A great advantage the arithmetic mean has over the median is that most of the time it's less expensive to calculate.  
+Remember that the median needs an **ordered collection** of data points. If our data points are not given to us already sorted we will need to sort it first and that might be computationally expensive, with an expense that grows as $O(n\log{n})$.  
+The arithmetic mean can be calculated at a linear ($O(n)$) cost as it doesn't care for the order of the data collection.
+
+## Mode
+
+Let's now focus a little on the case of distributions of categorical data.  
+The mode is the value that is repeated the most in a collection of values. The mode works both if the data points are categorical or numerical but when we have a *probability mass function* is the point where that mass reaches the maximum value.   
+Something interesting is that in a single distribution we can have more than one *mode*, in this case we can call our distribution **multimodal**.
+
+### Is that all?
+No, there are more statistics that can be used to get us an idea of the location of the distribution and basically all of them can be found by searching around on the web.  
+I hope that at this point you get the idea that for a single concept you can have different statistics which all have different applications, nuances, drawbacks or trade-offs.
+Let's look now at some statistics that are not used to find *central tendencies*.
+
+## Standard Deviation
+
+Standard Deviation is a measure of *dispersion* of a set of values which is a non-negative real number that is zero if all the data points are the same and increases as the data become more diverse.
+
+### Dispersion
+
+Usually *dispersion* is considered together with *central tendency* the most used properties of a distribution.  
+But, why is knowing the variability of our data useful?  
+Much depends on what we are looking for, for example a high variability in how wealth is distributed sometimes is an indicator of something going wrong in a country. 
+Also if data had no variability we would not need something like probability or statistics to extract knowledge from data as we would be able to find mathematical laws for everything quite easily.  
+
+### How it's calculated
+The standard deviation is, by definition, the square root of the **variance** of a distribution which is another possible statistic that is not linear in respect to the *dispersion* of data.  
+However when we have a sample $X = \{x_1, ..., x_n\}$ we can estimate the sample standard deviation ($s$) with the following formula:
+
+$$
+s = \sqrt{\frac{1}{n - 1} \sum_{i=1}^n (x_i - \bar{x})^2}
+$$
+
+Where $\bar{x}$ is the arithmetic mean of the sample. You might be asking yourself why we are dividing only by $n-1$ instead of $n$. That is called the [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction) and it's used to better estimate the Standard Deviation of the **population** from where the sample comes from.  
+If we are interested in finding only the Standard Deviation of the sample we are free to divide by $n$ instead however most of the work we do has the final goal to *infer* knowledge about the population of which we know a sample.  
+On this note it must be made absolutely clear that a random sample is needed to ensure that we are not cheating during our analysis. If we were do handpick a sample we would be quite simply working on fraud and not on inference.
+
+### Other statistics
+Just like for the arithmetic mean the standard deviation **is not a silver bullet**, it's not particularly resilient to noise nor it can be applied to categorical data.  
+For those use cases other statistics can be used, for example the **[Inter-Quantile Range](https://en.wikipedia.org/wiki/Interquartile_range)** and the **[Median Absolute Deviation](https://en.wikipedia.org/wiki/Median_absolute_deviation)** are more robust than the standard deviation.  
+To handle the categorical case a statistic that is used often is the **[Entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory))**.

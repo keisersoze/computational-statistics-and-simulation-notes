@@ -1,0 +1,74 @@
+---
+title: "basic_statistics"
+author: "Gregory Sech"
+date: "9/25/2020"
+output:
+  html_document:
+    df_print: paged
+  md_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Basic Statistics with R
+
+We will start by loading our data:
+```{r}
+data = read.table("1 soil-data-cleaned.csv", dec = ".", sep = ",", header = TRUE)
+```
+
+We can see a single Dataframe variable by using the `$` operator.
+
+```{r}
+data$Clay1
+```
+
+We can summarize a variable using the `summary` function.
+```{r}
+summary(data$Clay1)
+```
+
+The first quantile having value 21 means that 25% of the samples taken in the first layer have `Clay1` have 21% or less of their weight being composed by Clay.  
+
+We could also look at the single percentiles if we are looking for a specific sorted percentage of the sample.
+```{r}
+quantile(data$Clay1, seq(0, 1, 0.01))
+```
+
+The soil samples with the largest concentration of clay, belonging to the last percentile, the 1% with more clay has its weight composed by more than 69.2% or clay.
+
+From the summary we can also notice that there is a small difference between `mean` and `median`. Keep a close watch to datasets that have quite different mean and median, they can be tricky.  
+This is a tipical case of waiting time or economy/financial related data. Skewered data is also common in computer science.  
+Sometimes this happens when there are black swans (mosca bianca or pecora nera) in the dataset.
+
+## Boxplot
+
+Let's visualise a boxplot of this variable to get some visual insight of some of the summarized statistics and some more!
+```{r}
+boxplot(data$Clay1)
+```
+
+In the boxplot we can see the same stats seen in the summary however we can also notice that there are some particular data-points that are somewhat detached from the rest of the distribution.  
+Those datapoints are not anomalies per-se. We can identify anomalies only is we are familiar with the semantics of the data so this is another example of when knowing quite well your data gives you a boost.
+
+## Median Absolute Deviation
+It's a "robust" standard deviation, it's based on the median instead of the arithmetic mean and also uses the absolute value instead of the euclidian correction.  
+
+## Histogram
+```{r}
+hist(data$Clay1)
+```
+A histogram gives us another way to see an approximate representation of the distribution of our data.
+We are simply dividing the values of our data in "bins", in our case our bins are long 10, and counting for each bin how many values are present in that interval.
+
+## Empirical Comulative Distribution Function
+It's a step function that given a value $x$ returns the estimated probability of seeing a value that is lower of equal of $x$. 
+
+Let's visualize it on our `Clay1` data. We can also remember that the median of our distribution should match the value 0.5 of our ECDF as it is the point which is bigger and smaller of 50% of our data. I'll plot that line in red.
+```{r}
+plot(ecdf(data$Clay1))
+abline(h=0.5, col='red')
+```
