@@ -1,0 +1,10 @@
+---  
+title: Computational Statistics and Simulation Notes 
+author: Filippo Maganza, Gregory Sech
+output: 
+  pdf_document:
+    toc: yes 
+---
+
+```{r child = '01_descriptive_statistics.Rmd'}
+```
