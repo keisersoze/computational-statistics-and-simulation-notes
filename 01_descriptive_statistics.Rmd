@@ -9,10 +9,10 @@ output: pdf_document
 
 These are notes on the [Computational Statistics and Simulation course](https://www.unive.it/data/insegnamento/332764) at Ca' Foscari's Master Degree Programme of Computer Sicence.  
 This course is taught by [Professor Mario Marozzi](https://www.unive.it/data/persone/12251895) and does not have a Textbook as it is mostly a practical course.  
-There might be some mistakes or straight up conceptual errors, for that I am sorry.  
-Anyone is welcome to post an issue or open a pull request to ask for a fix. I will try to be as swift as possible in getting it fixed.
+There might be some mistakes or straight up conceptual errors, for that we are sorry.  
+Anyone is welcome to post an issue or open a pull request to ask for a fix. We will try to be as swift as possible in getting it fixed.
 
-# On HOW to choose a statistic.
+# Introduction to Descriptive Statistics
 
 Statistics are about various things however we can define **Descriptive Statistics** as a way of extracting knowledge from a data set.  
 It's quite important to understand what is the concept that a statistic is trying to extract from the data so that we can choose the right one.  
