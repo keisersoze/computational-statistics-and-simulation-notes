@@ -8,3 +8,6 @@ output:
 
 ```{r child = '01_descriptive_statistics.Rmd'}
 ```
+
+```{r child = '02_basic_statistics.Rmd'}
+```

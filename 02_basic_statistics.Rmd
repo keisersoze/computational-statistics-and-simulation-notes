@@ -9,15 +9,11 @@ output:
   pdf_document: default
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Basic Statistics with R
 
 We will start by loading our data:
 ```{r}
-data = read.table("1 soil-data-cleaned.csv", dec = ".", sep = ",", header = TRUE)
+data = read.table("datasets/soil-data.csv", dec = ".", sep = ",", header = TRUE)
 ```
 
 We can see a single Dataframe variable by using the `$` operator.
