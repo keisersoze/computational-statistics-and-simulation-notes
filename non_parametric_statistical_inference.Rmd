@@ -29,9 +29,9 @@ Let $X_a = (X_{1a},...,X_{n_aa})$ and $X_2 = (X_{1b},...,X_{n_bb})$ be two sampl
 3. Compute the p-value using $H_A$.
 
 ### Examples
-Let $X_1$ be a random variable representing one population and $X_2$ the random variable representing another population. We can then formally define the following test:
-$H_O: X_1=_dX_2 \;\;\;\; H_A: X_1>_dX_2$
-Here $=_d$ denotes $F_1(x)=F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ and means "is equal in distribution to", and $>_d$ denotes $F_1(x)\leq F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ (first-order stochastic dominance).
+<!-- Let $X_1$ be a random variable representing one population and $X_2$ the random variable representing another population. We can then formally define the following test: -->
+<!-- $H_O: X_1=_dX_2 \;\;\;\; H_A: X_1>_dX_2$ -->
+<!-- Here $=_d$ denotes $F_1(x)=F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ and means "is equal in distribution to", and $>_d$ denotes $F_1(x)\leq F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ (first-order stochastic dominance). -->
 
 
 
