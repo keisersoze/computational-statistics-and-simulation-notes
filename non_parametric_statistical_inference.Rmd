@@ -12,9 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Non-parametric methods
 
-Non-parametric methods allow inference without making the assumption that the sample has been taken from a particular distribution.
-
-Non-parametric are more robust, meaning that they can applied in a vastely range of samples.
+Non-parametric methods allow inference without making the assumption that the sample has been taken from a particular distribution. Therefore, they can applied in a vastely range of samples, for example when the assumptions of common parametric methods do not hold.
 
 ## Permutation test
 
@@ -28,10 +26,68 @@ Let $X_a = (X_{1a},...,X_{n_aa})$ and $X_2 = (X_{1b},...,X_{n_bb})$ be two sampl
 2. Build the null reference distribution by computing the test statistic in 1 with all permutations of group label assignments.
 3. Compute the p-value using $H_A$.
 
+
 ### Examples
 <!-- Let $X_1$ be a random variable representing one population and $X_2$ the random variable representing another population. We can then formally define the following test: -->
 <!-- $H_O: X_1=_dX_2 \;\;\;\; H_A: X_1>_dX_2$ -->
 <!-- Here $=_d$ denotes $F_1(x)=F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ and means "is equal in distribution to", and $>_d$ denotes $F_1(x)\leq F_2(x) \;\; \forall x \in  R_{X_1,X_2}$ (first-order stochastic dominance). -->
+
+## R algorithms
+
+```{r, echo = TRUE}
+T.test=function(x1,x2,alt,K=1000)
+     {x=c(x1,x2)
+      n1=length(x1)
+      n2=length(x2)
+      n=n1+n2
+      t.ob=sum(x1)-sum(x2)
+      t.perm=vector(,K)
+
+      for (k in 1:K)
+         {x.perm=sample(x)
+          x1.perm=x.perm[1:n1]
+          x2.perm=x.perm[(n1+1):(n1+n2)]
+          t.perm[k]=sum(x1.perm)-sum(x2.perm)
+         }
+    
+      if (alt=="greater")   pv.t=length(t.perm[t.perm>=t.ob])/K
+      if (alt=="less")      pv.t=length(t.perm[t.perm<=t.ob])/K
+      if (alt=="two.sided") pv.t=length(abs(t.perm)[abs(t.perm)>=abs(t.ob)])/K
+
+     print(pv.t)
+}
+
+x1=rnorm(3)
+x2=rnorm(3)
+T.test(x1,x2,"two.sided",10000)
+
+T.test2=function(x1,x2,alt) {
+  library(combinat)
+  
+  x=c(x1,x2)
+  n1=length(x1)
+  n2=length(x2)
+  n=n1+n2
+  t.ob=sum(x1)-sum(x2)
+  permutations = permn(x)
+  t.perm=vector(,length(permutations))
+  
+  for (i in length(permutations)) {
+    x1.perm=permutations[[i]][1:n1]
+    x2.perm=permutations[[i]][(n1+1):(n1+n2)]
+    t.perm[i]=sum(x1.perm)-sum(x2.perm)
+  }
+  
+  if (alt=="greater")   pv.t=length(t.perm[t.perm>=t.ob])/length(permutations)
+  if (alt=="less")      pv.t=length(t.perm[t.perm<=t.ob])/length(permutations)
+  if (alt=="two.sided") pv.t=length(abs(t.perm)[abs(t.perm)>=abs(t.ob)])/length(permutations)
+  
+  print(pv.t)
+}
+
+T.test2(x1,x2,"two.sided")
+
+```
 
 
 
