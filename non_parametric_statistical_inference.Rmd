@@ -169,10 +169,13 @@ Lepage test is a nonparametric test for the  [Two-sample location scale problem]
 ## Cucconi test
 
 Cucconi test is a nonparametric test for the  [Two-sample location scale problem] which is not  familiar as other location-scale tests but it is of interest for several reasons:
-* from a historical point of view it is of interest because it has been
+* From a historical point of view, it is of interest because it has been
 proposed some years before the Lepage test.
-* it is not a combination of a test for location and a test for scale as
+* It is not a combination of a test for location and a test for scale as
 the other location-scale tests.
+* It compares favorably with Lepage type tests in terms of power
+and type one error probability.
+* It is much more easy to be computed because it requires only the ranks of one sample in the combined sample, whereas many other tests require also scores of various types as well as to permutationally estimate mean and variance of test statistics because their analytic formulae are not available.
 
 ### Applicability
 
